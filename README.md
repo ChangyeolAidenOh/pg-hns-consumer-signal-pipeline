@@ -621,6 +621,8 @@ These limitations do not invalidate the strategic direction — the displacement
 
 An interactive Streamlit dashboard visualizes all three pipeline layers:
 
+🔗 **Live Demo**: https://pg-hns-consumer-signal-pipeline-zsduoshxqdtv3nnyfnkfku.streamlit.app/
+
 ```bash
 streamlit run dashboard.py
 ```
