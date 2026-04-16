@@ -1,9 +1,9 @@
 kiwipiepy==0.23.1
-gensim
+gensim==4.2.0
 streamlit
 plotly
 pandas
-numpy>=1.21,<2.0
+numpy>=1.18,<2.0
 scikit-learn
 torch
 chronos-forecasting
