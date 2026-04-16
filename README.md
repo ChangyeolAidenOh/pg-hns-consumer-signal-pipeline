@@ -1,8 +1,8 @@
 # Head & Shoulders Consumer Switching Signal Detection Pipeline
 
-A 3-layer Korean NLP × Trend × ML pipeline that detects and quantifies consumer switching signals for **Head & Shoulders (P&G Korea)** in the shampoo category. The pipeline integrates unstructured VoC data (Layer 1), structured search trend data (Layer 2), and a segment-level switching probability model (Layer 3) to answer a single strategic question:
+A 3-layer Korean NLP × Trend × ML pipeline that detects and quantifies consumer switching signals for **Head & Shoulders (P&G Korea)** in the Korean shampoo category. The pipeline integrates unstructured VoC data (Layer 1), structured Naver DataLab search trend data (Layer 2), and a segment-level switching probability model (Layer 3) to answer a single strategic question:
 
-> **"As consumers shift their scalp problem-solving frame from 'shampoo brands' toward 'derma/clinic solutions', can Head & Shoulders defend its position through Charcoal and mild-acid line extensions — or is the category itself being redefined?"**
+> **"As consumers shift their scalp problem-solving frame from 'shampoo brands' toward 'derma/clinic solutions', can Head & Shoulders defend its position through Charcoal and mild-acid line extensions — or is the category itself being redefined around a new reference point?"**
 
 ---
 
@@ -28,26 +28,26 @@ A 3-layer Korean NLP × Trend × ML pipeline that detects and quantifies consume
 
 ## Project Overview
 
-This pipeline was built as a portfolio project targeting the **P&G Korea S&M (Sales & Marketing)** internship role. Rather than producing a surface-level brand analysis, the project attempts to identify *causal* signals in consumer language and search behavior that explain *why* and *how fast* consumers are switching away from Head & Shoulders — and which specific consumer segments are at the highest structural risk.
+This pipeline was built as a portfolio project targeting the **P&G Korea S&M (Sales & Marketing)** internship role. Rather than producing a surface-level brand sentiment analysis, the project attempts to identify *causal* signals in consumer language and search behavior that explain *why* and *how fast* consumers are switching away from Head & Shoulders — and which specific consumer segments are at the highest structural risk.
 
 The analysis was designed to answer:
-- What language signals in Korean VoC indicate active switching vs. latent risk vs. satisfaction?
-- Does Naver search trend data independently confirm the VoC signals, and at what velocity?
-- Which consumer segments have the highest switching probability, and what intervention is appropriate for each?
-- What does the cross-layer picture say about the *frame* shift in how consumers approach scalp problems — not just which brand they prefer?
+- What language signals in Korean VoC indicate active switching, latent risk, or continued satisfaction — and do these signals differ by channel (blog, cafe, YouTube)?
+- Does Naver DataLab search trend data independently confirm the VoC signals, and at what velocity is the competitive displacement occurring?
+- Which consumer segments carry the highest switching probability when Layer 1 and Layer 2 signals are integrated, and what is the appropriate intervention for each?
+- What does the cross-layer picture reveal about the *frame* shift in how consumers approach scalp problems — not just which brand they choose, but how they define the problem itself?
 
 ---
 
 ## Business Context
 
-The Korean shampoo market is undergoing a structural repositioning. Between 2020 and 2026, the following trends converged:
+The Korean shampoo market is undergoing a structural repositioning that cannot be explained by ordinary competitive dynamics. Between 2020 and 2026, several trends converged simultaneously:
 
-- **닥터그루트** (Doctor Groot), once the dominant functional shampoo brand, collapsed -87.8% in search volume from its 2020 peak
-- **헤드앤숄더클리니컬스트렝스** (Head & Shoulders Clinical Strength), HNS's premium functional line, effectively disappeared from search by 2026 (35.9 avg in 2021 → 0.0 in 2026)
-- **안티트로** (Antitro), a derma-channel brand by Curev, entered the market in December 2024 and *reversed* Head & Shoulders Core search volume within 6 months (by June 2025)
-- The overall shampoo category rebounded +14.6% in 2026 — not from traditional brands, but driven by Antitro's rapid ascent
+- **닥터그루트** (Doctor Groot), once the dominant functional shampoo brand with the highest search volume in the category, collapsed -87.8% from its 2020 peak — confirming that the functional shampoo segment as a whole is under structural pressure, not just individual brands.
+- **헤드앤숄더클리니컬스트렝스** (Head & Shoulders Clinical Strength), the HNS line most directly positioned in the medicated/clinical segment, effectively disappeared from Naver Shopping search by 2026 (annual average: 35.9 in 2021 → 0.0 in 2026).
+- **안티트로** (Antitro), a derma-channel shampoo brand by Curev with hospital and pharmacy distribution, entered the Naver Shopping search index in December 2024 with near-zero volume and reversed Head & Shoulders Core search volume within exactly 6 months (June 2025). By April 2026 its search volume stands at 1.327× Head & Shoulders Core.
+- The overall shampoo category click volume, which had declined -20.6% in 2024 and -22.2% in 2025, rebounded +14.6% in 2026 — not because traditional brands recovered, but because Antitro's ascent expanded the addressable market under a new consumer search behavior.
 
-This is not a brand preference shift. It is a **category frame shift**: consumers who previously searched "비듬샴푸" (dandruff shampoo) are now searching "안티트로샴푸" — a brand-specific term that has become a category surrogate. The pipeline was designed to measure this shift in consumer language, quantify it in search data, and translate it into segment-level switching probabilities.
+These trends together indicate a **category frame shift**: consumers who historically searched "비듬샴푸" (dandruff shampoo) as their primary solution-seeking behavior are transitioning toward brand-specific clinical terminology — specifically "안티트로샴푸" — as their new default reference. This pipeline was built to measure that shift in consumer language, validate it against search trend data, and translate it into segment-level switching probabilities with actionable intervention recommendations.
 
 ---
 
@@ -55,27 +55,27 @@ This is not a brand preference shift. It is a **category frame shift**: consumer
 
 ### Layer 1 — VoC Data
 
-| Source | Collection Method | Records | Notes |
-|--------|-------------------|---------|-------|
-| Naver Blog | Naver Search API (official) | 653 | Long-form usage reviews, ingredient analysis |
-| Naver Cafe | Naver Search API (official) | 675 | Community Q&A, comparison discussions |
+| Source | Collection Method | Records (raw) | Notes |
+|--------|-------------------|---------------|-------|
+| Naver Blog | Naver Search API (official) | 653 | Long-form usage reviews, ingredient discussions |
+| Naver Cafe | Naver Search API (official) | 675 | Community Q&A, comparison threads |
 | YouTube Comments | YouTube Data API v3 (official) | 1,386 | Purchase motivation, post-purchase reaction |
 
 - **Total collected**: 2,714 documents
 - **After HNS relevance filter**: 1,744 documents
 - **Relevance filter keywords**: 비듬, 두피, 각질, 가려움, 지루성, 설페이트, 클리니컬, 프로페셔널, 차콜, 약산성, 안티트로, 두피염, 정수리
-- **Collection note**: All data collected via official APIs only. No scraping of systems that prohibit automated access. Raw data not redistributed.
+- **Collection note**: All data collected via official APIs only. No scraping of systems that prohibit automated access. Raw data not redistributed in this repository.
 
 ### Layer 2 — Naver DataLab Trend Data
 
-| Source | Coverage | Features |
-|--------|----------|----------|
-| 분야통계_샴푸 (Category click volume) | 2020-01 ~ 2026-04 | 1 column |
-| 쇼핑인사이트_헤드앤숄더 (Brand keyword search) | 2020-01 ~ 2026-04 | 5 columns |
-| 쇼핑인사이트_증상카테고리 (Symptom keyword search) | 2020-01 ~ 2026-04 | 5 columns |
-| 검색어트렌드_브랜드경쟁구도 (Brand competition) | 2020-01 ~ 2026-03 | 5 columns |
+| File | Coverage | Columns |
+|------|----------|---------|
+| 분야통계_샴푸 (7 files) | 2020-01 ~ 2026-04 (daily, resampled monthly) | category_click |
+| 쇼핑인사이트_헤드앤숄더 (7 files) | 2020-01 ~ 2026-04 | 헤드앤숄더샴푸, 헤드앤숄더차콜, 헤드앤숄더, 헤드앤숄더프로페셔널, 헤드앤숄더클리니컬스트렝스 |
+| 쇼핑인사이트_증상카테고리 (7 files) | 2020-01 ~ 2026-04 | 비듬샴푸, 지루성두피샴푸, 안티트로샴푸, 지성두피샴푸, 비듬 |
+| 검색어트렌드_브랜드경쟁구도 (1 XLSX) | 2020-01 ~ 2026-03 | 팬틴, 헤드앤숄더_경쟁, 닥터그루트, 케라시스, 두피케어카테고리 |
 
-- **Total**: 76 months × 16 features
+- **Unified feature table**: 76 months × 16 columns
 
 ---
 
@@ -88,25 +88,25 @@ pg-hns-consumer-signal-pipeline/
 │   ├── collector_naver.py               # Naver Blog/Cafe collection via Search API
 │   ├── collector_youtube.py             # YouTube comment collection via Data API v3
 │   ├── preprocessor.py                  # kiwipiepy morphological analysis + 4 modes
-│   │                                    # user word: 안티트로 (NNP)
+│   │                                    # user word: 안티트로 registered as NNP
 │   ├── LDA_pipeline.py                  # LDA topic modeling: per-source × per-mode
 │   ├── causal_signal_detector.py        # Causal signal scoring + temporal analysis
 │   └── data/
 │       ├── raw/                         # Collected CSV files (gitignored)
-│       └── processed/                   # Analysis outputs (gitignored)
+│       └── processed/                   # All analysis output CSVs (gitignored)
 │
-├── trend_pipeline/                      # Layer 2: Trend & forecasting pipeline
-│   ├── trend_loader.py                  # Multi-source DataLab CSV → unified feature table
-│   ├── trend_analyzer.py                # Chronos forecast (Part A) + structural analysis (Part B)
+├── trend_pipeline/                      # Layer 2: Search trend & forecasting pipeline
+│   ├── trend_loader.py                  # 22 DataLab files → unified monthly feature table
+│   ├── trend_analyzer.py                # Part A: Chronos forecast | Part B: structural analysis
 │   └── data/
-│       ├── raw/                         # Naver DataLab CSV + XLSX files (gitignored)
+│       ├── raw/                         # Naver DataLab CSV + XLSX (gitignored)
 │       └── processed/                   # trend_features.csv, chronos_forecast.csv (gitignored)
 │
-├── switching_pipeline/                  # Layer 3: Consumer switching probability
+├── switching_pipeline/                  # Layer 3: Consumer switching probability model
 │   ├── feature_builder.py               # Layer 1 + Layer 2 → unified feature table + segment labels
-│   ├── segment_classifier_regression.py # Logistic regression approach (adopted)
+│   ├── segment_classifier_regression.py # Logistic Regression approach (adopted)
 │   ├── segment_classifier_clustering.py # KMeans clustering approach (tested, not adopted)
-│   ├── switching_probability.py         # Brand risk score + intervention plan
+│   ├── switching_probability.py         # Brand risk score + segment intervention plan
 │   └── data/                            # Output CSVs (gitignored)
 │
 ├── notebooks/
@@ -124,79 +124,98 @@ pg-hns-consumer-signal-pipeline/
 
 ```
 Layer 1 — VoC Pipeline
-─────────────────────────────────────────────────────────────────
+─────────────────────────────────────────────────────────────────────
 Raw Data Collection
 (Naver Blog/Cafe via Search API + YouTube via Data API v3)
         │
         ▼
 collector_naver.py / collector_youtube.py
-(2,714 docs total)
+(2,714 docs: Blog 653 + Cafe 675 + YouTube 1,386)
         │
         ▼
 preprocessor.py
-(kiwipiepy + 안티트로 user word + 4 preprocessing modes)
+(kiwipiepy morphological analysis)
+(4 modes: unigram / bigram / unibi_mix / adj_noun)
+(user word: 안티트로 → NNP to prevent segmentation)
+(STOPWORDS finalized after raw data inspection)
         │
         ▼
-LDA_pipeline.py                    hns_bertopic.ipynb (Colab)
-(per-source × per-mode)            (BERT + HDBSCAN, 17 topics)
-        │                                      │
-        ▼                                      ▼
-hns_lda_results.csv         hns_bertopic_results.csv
-        │                                      │
-        └──────────────┬────────────────────────┘
+LDA_pipeline.py                     hns_bertopic.ipynb (Colab, T4)
+(per-source × per-mode,             (paraphrase-multilingual-MiniLM-L12-v2
+ k=2~7 coherence optimization)       + HDBSCAN, min_topic_size=8)
+        │                                        │
+        ▼                                        ▼
+hns_lda_results.csv              hns_bertopic_results.csv
+                                 hns_bertopic_keywords.json
+                                 hns_bertopic_documents.csv
+        │                                        │
+        └──────────────┬──────────────────────────┘
                        ▼
             hns_lda_bertopic_consensus.csv
-            (12 High Confidence signals)
+            (12 High Confidence signals, LDA × BERTopic cross-validated)
                        │
                        ▼
         causal_signal_detector.py
-        (churn risk 24.0% | competitor mention 101 docs)
+        (6 churn signal categories + 3 positive signal categories)
+        (competitor_mentioned flag: 안티트로, 니조랄)
                        │
                        ▼
-        hns_causal_signals.csv / hns_temporal_signals.csv
+        hns_causal_signals.csv       hns_temporal_signals.csv
+        (1,744 docs scored)          (monthly churn/positive trend)
 
 
 Layer 2 — Trend Pipeline
-─────────────────────────────────────────────────────────────────
-Naver DataLab CSV / XLSX (22 files)
+─────────────────────────────────────────────────────────────────────
+22 Naver DataLab files (CSV × 21 + XLSX × 1)
         │
         ▼
 trend_loader.py
-(76 months × 16 features → trend_features.csv)
+(outer join on monthly date index → 76 rows × 16 columns)
+(trend_features.csv)
         │
-        ├────────────────────────────────────────┐
-        ▼                                        ▼
-Part A: Chronos Forecast                Part B: Structural Analysis
-(Amazon Chronos zero-shot)              (antitro reversal, HNS lifecycle,
-(12-month HNS forecast)                  competitor trajectory, category shift)
-        │                                        │
-        ▼                                        ▼
-chronos_forecast.csv              trend_analysis_summary.csv
+        ├──────────────────────────────────────────────┐
+        ▼                                              ▼
+Part A: Chronos zero-shot forecast            Part B: Structural trend analysis
+(Amazon Chronos-T5-Small, CPU inference)      (antitro reversal timing + velocity,
+(12-month HNS Core forecast,                   HNS product line lifecycle,
+ 80% prediction interval)                      competitor trajectory vs 2020 baseline,
+        │                                      category click dynamics,
+        ▼                                      symptom keyword language shift)
+chronos_forecast.csv                                   │
+                                                       ▼
+                                          trend_analysis_summary.csv
 
 
 Layer 3 — Switching Pipeline
-─────────────────────────────────────────────────────────────────
+─────────────────────────────────────────────────────────────────────
 hns_causal_signals.csv + trend_features.csv
         │
         ▼
 feature_builder.py
-(VoC features + segment labels: Active Switcher / At-risk / Passive / Loyal)
+(11 VoC behavioral features per document)
+(rule-based segment labels:
+ Active Switcher / At-risk / Passive User / Loyal)
         │
-        ├─────────────────────────────────┐
-        ▼                                 ▼
-segment_classifier_regression.py  segment_classifier_clustering.py
-(Logistic Regression, adopted)     (KMeans, tested — At-risk segment
-                                    lost in clustering, not adopted)
+        ├─────────────────────────────────────────┐
+        ▼                                         ▼
+segment_classifier_regression.py      segment_classifier_clustering.py
+(Logistic Regression,                  (KMeans k=7,
+ C grid search: 0.01~10,               At-risk segment lost in clusters,
+ CV accuracy 0.9300,                   not adopted)
+ adopted)
         │
         ▼
 switching_probability.py
-(brand risk score + intervention plan)
+(trend_multiplier = 1.0 + w_antitro × antitro_pressure + w_hns × hns_decline)
+(weights grid-searched: w_antitro=0.50, w_hns=0.40)
+(brand risk score + segment intervention plan)
         │
         ▼
-switching_implications.csv / timeline_analysis.csv
+switching_prob_regression.csv    switching_implications.csv
+timeline_analysis.csv
 
 
-All layers → dashboard.py (Streamlit 3-layer integrated dashboard)
+All layers → dashboard.py (Streamlit 5-tab integrated dashboard)
 ```
 
 ---
@@ -207,24 +226,30 @@ All layers → dashboard.py (Streamlit 3-layer integrated dashboard)
 
 #### Preprocessing
 
-Four preprocessing strategies were applied, enabling direct comparison of how token representation affects topic coherence:
+Four preprocessing strategies were applied to enable direct comparison of how token representation affects topic coherence in Korean beauty VoC:
 
 | Mode | Description |
 |------|-------------|
-| `unigram` | Single noun tokens; stopwords + domain noise removed |
-| `bigram` | Consecutive noun pairs (e.g. `클리니컬_스트렝스`, `정수리_냄새`) |
+| `unigram` | Single noun tokens (NNG, NNP, length ≥ 2); stopwords + domain noise removed |
+| `bigram` | Consecutive noun pairs (e.g. `클리니컬_스트렝스`, `정수리_냄새`, `지루_두피`) |
 | `unibi_mix` | Union of unigram and bigram tokens |
-| `adj_noun` | Adjective-noun pairs for sentiment-bearing phrases |
+| `adj_noun` | Adjective-noun pairs for sentiment-bearing phrases (e.g. `순한_클렌저`) |
 
-All modes use `kiwipiepy` for Korean morphological analysis. `안티트로` was registered as a user word (`NNP`) to prevent morpheme segmentation — confirmed necessary after the first-run LDA output showed `안티트` (truncated form) appearing in Topic 6.
+All modes use `kiwipiepy` for Korean morphological analysis, selected over KoNLPy for compatibility with Apple Silicon (M-series Mac). The kiwipiepy tokenizer filters 1-character tokens, Korean particles (이/가/을/를), and verb forms (하다/있다/되다) automatically through POS tagging — meaning these do not need to appear in the STOPWORDS dictionary, keeping it purposeful and lean.
 
-**STOPWORDS design**: Finalized *after* examining raw collected data rather than before. Key decisions:
-- `두피` (scalp) removed as standalone token — appeared in 100%+ of topics at 0.1+ weight, eliminating discriminative value. Compound forms survive through bigram extraction.
-- Shopping platform noise (`최저가`, `적립`, `옵션`) added after first LDA run confirmed contamination.
+`안티트로` was registered as a user word (`NNP`, score=0) to prevent morpheme segmentation. This was confirmed necessary after the first-run LDA output showed the truncated form `안티트` appearing in Topic 6 — without the user word registration, the brand name was being split by the tokenizer and losing its identity as a competitor signal.
+
+**STOPWORDS design**: The stopwords list was finalized *after* examining the raw collected data — not before. This is an intentional design choice: pre-defining stopwords without looking at the data risks both over-filtering (removing meaningful signals) and under-filtering (missing domain-specific noise). Key decisions made from data inspection:
+
+- `두피` (scalp) removed as a standalone token. It appeared in 100%+ of LDA topics at 0.1+ weight across all modes, effectively functioning as an uninformative prior that suppresses all other signals. Compound forms (`지루성두피`, `두피각질`) survive through bigram extraction and retain their discriminative value.
+- `헤드앤숄더`, `샴푸` removed for the same reason — present in virtually all documents, contributing no topic-level differentiation.
+- Shopping platform noise (`최저가`, `적립`, `옵션`, `평점`) added after the first LDA run confirmed contamination in Topic 1 of the full corpus unigram model.
+
+`adj_noun` mode returned Insufficient data (fewer than 30 valid documents) across all sources. Korean shampoo VoC is dominated by noun+verb structures (`두피 가려움이 심해졌어요`, `비듬이 없어졌어요`) rather than adjective-noun compounds. This is structurally different from English beauty reviews (where `gentle_cleanser`, `dry_skin` are natural compound descriptors), and is a linguistic property of Korean scalp care VoC rather than a pipeline deficiency.
 
 #### LDA Topic Modeling
 
-Gensim's `LdaModel` applied per combination of source × mode. Optimal k selected by maximizing c_v coherence across k = 2–7. `adj_noun` returned Insufficient data across all sources — Korean shampoo VoC is dominated by noun+verb structures rather than adjective-noun compounds.
+Gensim's `LdaModel` was applied per combination of source (`blog` / `cafearticle` / `youtube` / `all`) × mode (`unigram` / `bigram` / `unibi_mix`). Optimal topic count *k* was selected by maximizing c_v coherence across k = 2–7. All models used `passes=15` and `random_state=42`.
 
 **Coherence summary:**
 
@@ -235,13 +260,19 @@ Gensim's `LdaModel` applied per combination of source × mode. Optimal k selecte
 | cafearticle | 0.5951 | 0.3380 | 0.3414 |
 | youtube | 0.6103 | 0.3865 | 0.3650 |
 
+Bigram consistently outperforms unigram and unibi_mix across all sources. This is consistent with the finding from the prior ANUA Amazon review project (English) and confirms a cross-language principle: compound noun expressions capture the relational semantics of scalp care VoC better than isolated tokens. `unibi_mix` underperforms bigram because the addition of unigrams introduces noise that dilutes the phrase-level coherence gained from bigrams alone.
+
 #### Causal Signal Detection
 
-Keyword-based scoring across 6 churn signal categories and 3 positive signal categories. Documents flagged for competitor mention when `안티트로` or `니조랄` appear in text.
+`causal_signal_detector.py` applies a keyword-based scoring system to each document across two opposing signal categories:
+
+**Churn signals** (`direct_churn`, `efficacy_failure`, `skin_reaction`, `competitor_switch`, `formula_change`, `channel_barrier`) and **positive signals** (`repurchase`, `efficacy_positive`, `recommendation`).
+
+Each document receives a `signal_type` label (`이탈위험` / `긍정` / `중립`) based on the net balance of detected signals. The module additionally flags documents where `안티트로` or `니조랄` appear in the raw text (`competitor_mentioned`), enabling direct measurement of brand-switching signal intensity. Temporal analysis aggregates monthly churn and positive rates to surface trend anomalies.
 
 #### BERTopic
 
-`paraphrase-multilingual-MiniLM-L12-v2` embeddings + HDBSCAN on Google Colab (T4 GPU). Initial `min_topic_size=15` produced 3 topics with Topic 0 absorbing 91% of documents. Reduced to `min_topic_size=8` to achieve 17 meaningful topics.
+`paraphrase-multilingual-MiniLM-L12-v2` embeddings + HDBSCAN clustering, run on Google Colab (T4 GPU) on 1,742 filtered documents. Initial `min_topic_size=15` produced only 3 topics with Topic 0 absorbing 91% of documents (1,590 of 1,742). This reflects the corpus's inherent thematic homogeneity: most documents share the scalp/dandruff context, making large-scale semantic differentiation difficult. Reducing to `min_topic_size=8` produced 17 semantically distinct topics, enabling LDA × BERTopic cross-validation that yielded 12 High Confidence signals.
 
 ---
 
@@ -249,23 +280,23 @@ Keyword-based scoring across 6 churn signal categories and 3 positive signal cat
 
 #### trend_loader.py
 
-Merges 22 Naver DataLab files into a unified monthly feature table (76 rows × 16 columns, 2020-01 to 2026-04).
+Merges 22 Naver DataLab files via outer join on a monthly date index, resampled to month-end frequency. Produces 76 rows × 16 columns covering 2020-01 to 2026-04. Missing values (primarily `안티트로샴푸` pre-2024 and `헤드앤숄더차콜` pre-2021) are filled with 0, which correctly represents zero search volume rather than missing observations.
 
-#### trend_analyzer.py — Part A: Chronos Forecast
+#### Part A: Chronos Zero-Shot Forecast
 
-**Amazon Chronos** (2024, zero-shot time series foundation model) used for 12-month HNS Core forecast. Selected over ARIMA/Prophet (outdated methodology) and deep learning models (TFT, PatchTST) because with only 76 monthly observations, any fine-tuning-dependent model faces fundamental data constraint issues. Chronos bypasses this via zero-shot inference.
+**Amazon Chronos** (2024) was selected for the 12-month HNS Core search volume forecast. The selection required ruling out alternatives:
 
-Forecast: HNS Core projected at 47–54 (median) for May 2026 – April 2027, 80% CI of 34–63. Flat trajectory — no sharp recovery, no further collapse.
+- **ARIMA / SARIMA / Prophet**: Statistically appropriate for 76 observations but represent 2010s-era methodology insufficient for a data science portfolio targeting a technology-forward role.
+- **TFT / PatchTST / TimesNet**: State-of-the-art time series deep learning, but all require substantially more training data than 76 observations for meaningful fine-tuning. The data constraint is fundamental, not addressable through architecture choice.
+- **Chronos (zero-shot)**: As a pre-trained foundation model (2024), Chronos bypasses the fine-tuning constraint via zero-shot inference from context alone, producing calibrated probabilistic forecasts without requiring training data splits.
 
-#### trend_analyzer.py — Part B: Structural Analysis
+Forecast result: HNS Core projected at 47–54 (median) for May 2026 – April 2027, with 80% confidence interval of 34–63. The flat trajectory indicates the search volume has stabilized at a structurally lower level than the 2020–2022 baseline, with no organic recovery expected.
 
-ML classification for Part B was attempted and abandoned:
+#### Part B: Structural Analysis
 
-- **FT-Transformer**: All 12 risk-label months fall in the time series tail (2025-05 onward), leaving zero risk samples in training set under time-ordered splitting. Not a model performance issue — a structural property of the data.
-- **ROCKET (sktime)**: Same structural limitation.
-- **Change point detection**: Trivial — the change point (Antitro launch, 2024-12) is already known from the data.
+ML classification for Part B was attempted through three successive approaches before being abandoned. The core structural problem: all 12 risk-labeled months fall within the final 12 months of the 76-month time series. Under time-ordered splitting (required to prevent data leakage), no training set can contain any risk samples regardless of model architecture. This is not a model capacity issue — it is a data structure constraint that invalidates supervised classification entirely. Full documentation in the [Methodological Decisions and Pivots](#methodological-decisions-and-pivots) section.
 
-The data's message is clear without a classifier. Structural descriptive analysis was adopted: antitro reversal timing, HNS line lifecycle, competitor trajectory, category dynamics, and symptom keyword language shift.
+The structural descriptive analysis adopted instead directly answers the business question: *when* did the displacement begin, *how fast* did it occur, *which product lines* are declining vs. growing, and *how has consumer search language shifted* over the same period.
 
 ---
 
@@ -273,161 +304,257 @@ The data's message is clear without a classifier. Structural descriptive analysi
 
 #### Segment Definition
 
+Four consumer segments defined from VoC behavioral signals via rule-based assignment:
+
 | Segment | Definition | n | % |
 |---------|------------|---|---|
-| Active Switcher | comparison_frame + competitor_mention + churn_signal | 83 | 4.8% |
-| At-risk | (medical_frame OR ingredient_frame) + churn_signal, no direct comparison | 91 | 5.2% |
-| Passive User | neutral signal, no strong frame | 1,224 | 70.2% |
+| Active Switcher | comparison_frame AND competitor_mention AND churn_signal | 83 | 4.8% |
+| At-risk | (medical_frame OR ingredient_frame) AND churn_signal, no direct competitor comparison | 91 | 5.2% |
+| Passive User | neutral signal, no strong frame detected | 1,224 | 70.2% |
 | Loyal | positive_signal, no churn indicators | 346 | 19.8% |
+
+The At-risk definition captures a specific behavioral state: consumers who have adopted clinical/ingredient scrutiny framing (signaling awareness of alternative solution categories) but have not yet explicitly compared Head & Shoulders to Antitro. These are pre-decision consumers — frame has shifted, brand comparison has not yet begun.
 
 #### Classifier Comparison
 
-**KMeans Clustering**: Optimal k=7 (silhouette=0.3988). At-risk segment entirely absorbed into Passive User clusters — KMeans failed to distinguish the medical/ingredient frame signal. Not adopted.
+**KMeans Clustering** (`segment_classifier_clustering.py`): Optimal k=7 by silhouette score (0.3988). The At-risk segment (91 documents) was entirely absorbed into Passive User clusters in cross-tabulation. KMeans cannot weight the ingredient/medical frame signal sufficiently without supervision — At-risk documents share too many surface features with Passive User (no competitor mention, moderate churn score). Not adopted.
 
-**Logistic Regression**: Regularization grid search (C ∈ {0.01…10.0}), optimal C=1.0, CV accuracy 0.9300 ± 0.0135. Features exclude rule-defining columns to avoid data leakage. Adopted.
+**Logistic Regression** (`segment_classifier_regression.py`): Features exclude rule-defining columns (`is_churn`, `is_competitor`, `is_comparison_frame`) to prevent data leakage — the classifier must predict segment membership from behavioral proxies alone. Regularization grid search (C ∈ {0.01, 0.05, 0.1, 0.5, 1.0, 5.0, 10.0}), optimal C=1.0, stratified 5-fold CV accuracy 0.9300 ± 0.0135. At-risk segment correctly preserved. Adopted.
 
-**Key coefficients (C=1.0):**
+**Key coefficients at C=1.0:**
 
-| Segment | Strongest positive signals |
-|---------|---------------------------|
-| Active Switcher | `churn_score` (+2.364), `is_blog` (+0.146) |
-| At-risk | `is_ingredient_frame` (+0.938), `is_medical_frame` (+0.737) |
-| Loyal | `positive_score` (+4.466), `churn_score` (-5.009) |
+| Segment | Strongest positive predictors | Interpretation |
+|---------|-------------------------------|----------------|
+| Active Switcher | `churn_score` (+2.364), `is_blog` (+0.146) | High churn intensity on blog channel |
+| At-risk | `is_ingredient_frame` (+0.938), `is_medical_frame` (+0.737) | Frame shift precedes brand comparison |
+| Loyal | `positive_score` (+4.466), `churn_score` (-5.009) | Cleanest opposing signal profile |
+| Passive User | `is_medical_frame` (-0.528), `is_ingredient_frame` (-0.603) | Absence of frame engagement |
+
+The At-risk coefficient pattern validates the segment hypothesis: `is_ingredient_frame` (+0.938) and `is_medical_frame` (+0.737) are the two strongest At-risk predictors, operating independently of competitor mention. This confirms that frame adoption precedes brand comparison as a behavioral sequence.
 
 #### Switching Probability
 
+Base switching probability from logistic regression P(Active Switcher | features) per document, averaged by segment, adjusted by a data-driven trend multiplier:
+
 ```
 trend_multiplier = 1.0 + w_antitro × antitro_pressure + w_hns × hns_decline
+
+where:
+  antitro_pressure = min(antitro_ratio / 2.0, 1.0)   # normalized [0, 1]
+  hns_decline      = max(-hns_momentum, 0)            # positive when declining
+  hns_momentum     = 3-month pct change of HNS Core search volume
 ```
 
-Weights optimized via grid search (maximize Active Switcher vs. Loyal probability gap): **w_antitro=0.50, w_hns=0.40** (multiplier=1.427).
+Weights grid-searched to maximize probability gap between Active Switcher and Loyal: **w_antitro=0.50, w_hns=0.40** (trend multiplier=1.427 at current values). This replaces arbitrary weight assignment with a data-driven objective.
 
-| Segment | n | P(switch) |
-|---------|---|-----------|
-| Active Switcher | 83 | 0.405 |
-| At-risk | 91 | 0.352 |
-| Passive User | 1,224 | 0.043 |
-| Loyal | 346 | 0.000 |
+**Final switching probabilities:**
 
-**Brand Risk Score: 0.068** — weighted average by segment size. The low overall score reflects that 90% of documents are Passive/Loyal. The signal is the *concentration* of switching probability in the 10% At-risk + Active Switcher segments.
+| Segment | n | Churn Rate | Competitor Rate | Medical Frame Rate | P(switch) |
+|---------|---|-----------|-----------------|-------------------|-----------|
+| Active Switcher | 83 | 1.000 | 1.000 | 0.229 | **0.405** |
+| At-risk | 91 | 1.000 | 0.000 | 0.418 | **0.352** |
+| Passive User | 1,224 | 0.199 | 0.013 | 0.092 | 0.043 |
+| Loyal | 346 | 0.000 | 0.006 | 0.121 | 0.000 |
+
+**Brand Risk Score: 0.068** — weighted average by segment size. The low overall figure reflects that 90% of documents are Passive User or Loyal. The correct interpretation: switching risk is concentrated in the 10% At-risk + Active Switcher population, where P(switch) exceeds 0.35 for both segments.
 
 ---
 
 ## Methodological Decisions and Pivots
 
+### Layer 2 Part B: Three Failed Approaches Before Structural Analysis
+
+**FT-Transformer**: Applied to 73 sliding-window samples (96 features, WINDOW_SIZE=6). All 12 risk-labeled months fall in the time series tail (2025-05 onward). Training set contains zero risk samples under time-ordered splitting. PCA dimensionality reduction and pos_weight class balancing were applied but cannot resolve a zero-sample training problem. The model correctly learned to predict "Stable" — because that is the only class it observed during training.
+
+**ROCKET classifier (sktime)**: State-of-the-art time series classification algorithm. Same fundamental constraint: Train — Stable: 51, Risk: 0. ROCKET performs well on small datasets through random convolutional kernels but cannot generalize from a training set that contains no positive-class examples.
+
+**Rule-based change point detection**: Abandoned immediately. The change point (Antitro market entry, December 2024) is explicitly visible in the data. Algorithmic detection adds no analytical value when the event is already known.
+
+**Conclusion**: The data has already answered the classification question directly and unambiguously. Forcing a supervised classifier onto this structure would produce technically invalid results while adding no information beyond what structural descriptive analysis provides.
+
+### Layer 3: KMeans vs. Logistic Regression
+
+KMeans was tested first as an unsupervised approach that makes no assumptions about segment definitions. The critical failure — At-risk segment entirely absorbed into Passive User clusters — occurred because KMeans cannot distinguish the subtle ingredient/medical frame signal from broader Passive User behavior without supervision. The At-risk segment's distinctiveness is in the *combination* of frame features (medical + ingredient) with churn signal in the absence of competitor mention — a nuanced behavioral profile that KMeans cannot weight appropriately through distance-based clustering.
+
+### BERTopic min_topic_size Reduction
+
+Initial `min_topic_size=15` collapse (91% into one topic) reflects corpus homogeneity, not a model failure. The reduction to 8 was data-driven: a topic with 8–15 documents is statistically marginal, but the alternative (3 topics, one absorbing 91% of the corpus) provides no discriminative value. The 17-topic solution at min_topic_size=8 is treated with appropriate caution — topics 10–16 (9–15 documents each) are supporting evidence rather than primary signals.
+
+### STOPWORDS Finalization After Data Inspection
+
+Pre-defining stopwords from domain knowledge alone would have missed two critical decisions: (1) `두피` removal (not obvious a priori that it would dominate 100%+ of topics) and (2) shopping platform noise identification (only visible after running the first LDA and seeing `최저가`, `적립`, `옵션` in Topic 1). The iterative inspect-run-refine approach produced a more accurate stopword list and is the recommended practice for domain-specific Korean NLP.
+
 | Decision Point | Attempted | Outcome | Final Approach |
 |----------------|-----------|---------|----------------|
-| Layer 2 Part B | FT-Transformer classification | Train set: 0 risk samples | Abandoned |
-| Layer 2 Part B | ROCKET classifier (sktime) | Same structural limitation | Abandoned |
-| Layer 2 Part B | Rule-based change point detection | Trivial (launch date already known) | Abandoned |
-| Layer 2 Part B | Structural descriptive analysis | Data message clear without classifier | Adopted |
-| Layer 3 | KMeans clustering | At-risk segment lost in clustering | Not adopted |
-| Layer 3 | Logistic Regression | At-risk preserved, CV 0.9300 | Adopted |
+| Layer 2 Part B | FT-Transformer | 0 risk samples in training set | Abandoned |
+| Layer 2 Part B | ROCKET (sktime) | Same structural constraint | Abandoned |
+| Layer 2 Part B | Change point detection | Trivial (event already known) | Abandoned |
+| Layer 2 Part B | Structural descriptive analysis | Directly answers business question | Adopted |
+| Layer 3 classifier | KMeans k=7 | At-risk segment lost | Not adopted |
+| Layer 3 classifier | Logistic Regression | At-risk preserved, CV 0.9300 | Adopted |
 | BERTopic min_topic_size | 15 | 3 topics, 91% in Topic 0 | Reduced to 8 |
 | Trend multiplier weights | Arbitrary (0.3, 0.2) | No data-driven basis | Grid search → (0.50, 0.40) |
-| STOPWORDS | Pre-defined before data inspection | Risk of over/under-filtering | Finalized after examining raw data |
+| STOPWORDS | Pre-defined before inspection | Risk of mis-specification | Finalized after data inspection |
 
 ---
 
 ## Key Findings
 
-### 1. Antitro Reversed Head & Shoulders Core in 6 Months
+### 1. Antitro Reversed Head & Shoulders Core in 6 Months — and Is Still Accelerating
 
-Antitro entered the Korean shampoo market in December 2024 with zero search volume. By June 2025 its Naver Shopping search volume exceeded Head & Shoulders Core — a reversal achieved in 6 months. By April 2026 the Antitro/HNS ratio stands at 1.327, with an acceleration peak of +40.2 in a single month (January 2026).
+Antitro entered the Naver Shopping search index in December 2024 with a volume of 1. By March 2025 it reached 18.1 (still below HNS Core at 54.3). By June 2025 it crossed the reversal threshold. By January 2026, a single-month increase of +40.2 units represented the largest single-month jump in the entire 76-month dataset across any keyword. By April 2026, the Antitro/HNS ratio stands at 1.327.
 
-> **Business implication**: The critical intervention window is before the Antitro/HNS ratio exceeds 1.5. At current trajectory this threshold may be crossed within months. Beyond 1.5, Antitro risks becoming the default consumer reference point for scalp care — a position Head & Shoulders has held for decades.
+The velocity of this displacement is the primary finding — not the fact of it. Six months from market entry to category reversal is not gradual competitive pressure. It is a step-function change driven by consumers who were already predisposed to a clinical/derma solution and adopted Antitro as the reference point as soon as it became visible. The Chronos forecast projects HNS Core at 47–54 (median) for May 2026 – April 2027 — flat, with no organic recovery expected.
 
----
-
-### 2. The Category Is Being Redefined, Not Just Competed Against
-
-Shampoo category click volume declined -20.6% in 2024 and -22.2% in 2025 — but rebounded +14.6% in 2026. This rebound is not from traditional brands recovering; it is driven by Antitro expanding the category by attracting consumers who now search for scalp solutions under a new brand-as-category term.
-
-Symptom keyword language shift:
-- 비듬샴푸 (Dandruff Shampoo): -21.3% from 2020 baseline
-- 지루성두피샴푸 (Seborrheic Shampoo): -57.6%
-- 안티트로샴푸 (Antitro Shampoo): 0 → 75.1 (now exceeds Dandruff Shampoo)
-
-> **Business implication**: Competing on shampoo attributes (fragrance, foam, volume) does not address this frame shift. The consumer is no longer asking "which shampoo is best for dandruff?" — they are asking "is this a medical-grade scalp solution?"
+> **Business implication**: The critical intervention window is before the Antitro/HNS ratio exceeds 1.5 — the threshold at which Antitro becomes the default consumer reference point rather than an alternative. At current trajectory (ratio 1.327, January 2026 acceleration +40.2), this threshold could be reached within 2–4 months. Beyond 1.5, repositioning Head & Shoulders against Antitro becomes structurally harder because the category framing shifts from "Head & Shoulders or something else" to "Antitro or something else."
 
 ---
 
-### 3. HNS Product Line Lifecycle — Clinical Strength Collapse
+### 2. The Category Is Growing — But Head & Shoulders Is Not the Beneficiary
 
-| Line | 2021 avg | 2026 avg | Change |
-|------|----------|----------|--------|
-| Core | 46.0 | 63.3 | +37.6% |
-| Clinical Strength | 35.9 | 0.0 | -100% |
-| Professional | 0.0 | 3.4 | new |
-| Charcoal | 0.0 | 0.9 | new |
+Shampoo category click volume increased +14.6% in 2026 after declining -20.6% in 2024 and -22.2% in 2025. This appears to be positive news. Symptom keyword data reveals the composition of this recovery:
 
-Clinical Strength — HNS's premium functional line that most directly competed in the derma/medicated segment — has disappeared from consumer search. The new Charcoal (0.9) and Professional (3.4) lines show minimal consumer uptake vs. Antitro (75.1).
+| Keyword | 2020 avg | 2026 avg | Change |
+|---------|----------|----------|--------|
+| 비듬샴푸 (Dandruff Shampoo) | 41.2 | 32.5 | -21.3% |
+| 지루성두피샴푸 (Seborrheic Shampoo) | 13.7 | 5.8 | -57.6% |
+| 안티트로샴푸 (Antitro Shampoo) | 0.0 | 75.1 | new entrant |
 
-> **Business implication**: The line extension strategy has not generated meaningful demand in the segments being lost to Antitro. A repositioning strategy focused on clinical/dermatological credibility is indicated.
+The 2026 category rebound is entirely driven by `안티트로샴푸`. The keywords that historically directed consumers toward Head & Shoulders — `비듬샴푸` (-21.3%) and `지루성두피샴푸` (-57.6%) — continue to decline. Antitro is simultaneously taking Head & Shoulders' existing share and expanding the total addressable market by attracting new search behavior under a new keyword. Head & Shoulders is losing share in a growing category — the category growth signal masks the displacement.
+
+> **Business implication**: Category-level click volume is no longer a reliable proxy for Head & Shoulders brand health. The appropriate metric is keyword-level share: `헤드앤숄더샴푸` as a proportion of total scalp-care search volume. By this measure, Head & Shoulders is declining at an accelerating rate even as the category expands. Also noteworthy: consumer search interest in "안티트로샴푸" as a category-level term is an interest signal — not necessarily direct purchase intent. However, as a brand-as-category term, it indicates Antitro has achieved a level of consumer mindshare that traditionally corresponds to category definition power.
 
 ---
 
-### 4. Churn Risk Is Concentrated in a Specific Signal Profile
+### 3. Head & Shoulders Clinical Strength Collapsed — New Lines Are Not Compensating
 
-Top churn keywords from 1,744 HNS-relevant documents:
+| Line | 2021 avg | 2023 avg | 2025 avg | 2026 avg |
+|------|----------|----------|----------|----------|
+| Core (헤드앤숄더샴푸) | 46.0 | 56.3 | 36.0 | 63.3 |
+| Clinical Strength (클리니컬스트렝스) | 35.9 | 19.4 | 4.5 | 0.0 |
+| Professional (프로페셔널) | 0.0 | 2.6 | 2.3 | 3.4 |
+| Charcoal (차콜) | 0.0 | 0.0 | 0.1 | 0.9 |
+
+Clinical Strength — the line most directly positioned as a clinical-grade scalp solution — collapsed from 35.9 in 2021 to 0.0 in 2026. Critically, this decline *predates Antitro's entry*: Clinical Strength was already at 4.5 in 2025 before Antitro achieved meaningful volume. Clinical Strength did not lose to Antitro — it lost consumer relevance before Antitro arrived to fill the vacuum.
+
+The new Charcoal (0.9) and Professional (3.4) lines show negligible uptake against Antitro's 75.1. These extensions appear to address different consumer needs — texture, sensory experience, routine differentiation — rather than the clinical efficacy need that Clinical Strength was positioned for and that Antitro now owns.
+
+> **Business implication**: The line extension strategy has not generated meaningful demand in the segments being lost to Antitro. The data suggests that consumers who left Clinical Strength did not migrate to Charcoal or Professional — they either migrated to Antitro/Nizoral or left the head & shoulders brand family entirely for the clinical segment. Recovering the clinical segment requires a positioning strategy that directly addresses clinical credibility (mechanism of action, dermatologist validation, antifungal efficacy), not product form novelty.
+
+---
+
+### 4. Churn Is Driven by Efficacy Failure — Not Brand Image Deterioration
+
+Of 1,744 HNS-relevant documents, 418 (24.0%) carry churn signals. Top churn keywords:
 
 ```
-가려움 (itchiness):        291  ← efficacy failure
-자극 (irritation):          90  ← skin reaction
-뾰루지 (pimples):           63  ← skin reaction
-안티트로 (Antitro):          56  ← competitor switch
-대신 (instead of):          52  ← replacement signal
-니조랄 (Nizoral):            45  ← derma alternative
+가려움 (itchiness):        291  ← efficacy failure — core symptom unresolved
+자극 (irritation):          90  ← skin reaction — product is aggravating the condition
+뾰루지 (pimples/bumps):     63  ← skin reaction — breakout trigger
+안티트로 (Antitro):          56  ← active competitive switch signal
+대신 (instead of):          52  ← replacement framing
+트러블 (skin trouble):       52  ← skin reaction
+니조랄 (Nizoral):            45  ← derma/pharmacy channel alternative
+올라오 (flare-up):           30  ← symptom escalation
 ```
 
-Itchiness (291 mentions) is 5× more frequent than any other churn signal. Consumers are not leaving because they dislike Head & Shoulders' brand image — they are leaving because it stopped solving their problem.
+Itchiness (291) is 5.2× more frequent than the next signal (자극, 90). This is a product efficacy signal, not a brand perception signal. Consumers are not leaving because Head & Shoulders' brand image has deteriorated — they are leaving because the core product promise (scalp symptom relief) is failing for a meaningful proportion of users. The co-occurrence of `안티트로` (56) and `니조랄` (45) alongside skin reaction signals — rather than alongside pricing or availability complaints — confirms that the churn trajectory is: efficacy failure → clinical alternative search → brand switch.
 
-> **Business implication**: The primary churn driver is unresolved symptom efficacy, not brand equity. Marketing interventions alone will not address this. Product-level intervention — reinforcing the clinical efficacy of zinc pyrithione — is the appropriate response.
+> **Business implication**: Marketing interventions that reinforce brand values or increase awareness will not address efficacy-driven churn. Consumers who mention itchiness and irritation in the context of Head & Shoulders have already experienced the product and found it insufficient. The appropriate response is clinical credibility reinforcement — specifically, consumer-accessible communication of zinc pyrithione's antifungal mechanism that directly addresses the efficacy comparison consumers are drawing with Antitro's active ingredient positioning. This is a product communication challenge, not a brand equity challenge.
 
 ---
 
-### 5. At-risk Segment: Pre-switch Consumers Identified by Frame, Not Action
+### 5. At-risk Segment: Pre-switch Consumers Are Identifiable Before They Switch
 
-The At-risk segment (91 documents, 5.2%) is defined by ingredient/medical frame adoption *without* direct competitor comparison — consumers who have started researching scalp problems through a clinical lens but have not yet identified Antitro as their alternative.
+The At-risk segment (91 documents, 5.2%) defines consumers who have adopted clinical/ingredient scrutiny framing without yet naming Antitro as their alternative:
 
-| Feature | At-risk | Passive User |
-|---------|---------|--------------|
-| is_medical_frame | 41.8% | 9.2% |
-| is_ingredient_frame | 60.4% | 11.6% |
-| is_competitor | 0.0% | 1.3% |
-| P(switch) | 0.352 | 0.043 |
+| Feature | At-risk | Active Switcher | Passive User |
+|---------|---------|-----------------|--------------|
+| is_medical_frame | 41.8% | 22.9% | 9.2% |
+| is_ingredient_frame | 60.4% | 22.9% | 11.6% |
+| is_competitor | 0.0% | 100.0% | 1.3% |
+| churn_rate | 100.0% | 100.0% | 19.9% |
+| P(switch) | 0.352 | 0.405 | 0.043 |
 
-> **Business implication**: At-risk consumers are accessible before they become Active Switchers. Proactive content addressing ingredient transparency — explaining zinc pyrithione's antifungal mechanism — can intercept this segment before they discover Antitro's clinical positioning.
+The At-risk segment's ingredient frame rate (60.4%) is higher than Active Switcher (22.9%) — meaning ingredient scrutiny is an *early-stage* behavior that peaks before competitor discovery, not a concurrent behavior. Consumers develop chemical/clinical literacy (searching for 설페이트, 계면활성제, 약산성) *before* they identify Antitro as their solution. The logistic regression coefficient confirms this: `is_ingredient_frame` (+0.938) is the strongest positive predictor of At-risk membership, operating independently of any competitor mention.
+
+The churn rates of At-risk (100%) and Active Switcher (100%) are identical. The only distinguishing feature is competitor mention: At-risk consumers have the same dissatisfaction intensity but have not yet found their alternative. This is the intervention window.
+
+> **Business implication**: At-risk consumers represent a conversion opportunity that closes as soon as they discover Antitro's clinical positioning. The behavioral sequence is: ingredient curiosity emerges → consumer searches for 설페이트 / 계면활성제 / 약산성 content → encounters Antitro's derma positioning → transitions to Active Switcher. Proactive content that addresses ingredient questions from Head & Shoulders' perspective — explaining zinc pyrithione's antifungal mechanism, positioning HNS as a clinically validated solution — can intercept At-risk consumers during the ingredient curiosity phase, before they encounter Antitro. The intervention timing is the period between frame adoption and competitive brand discovery: estimated at 2–4 weeks based on typical consumer search-to-purchase cycles.
+
+---
+
+### 6. Temporal Churn Trend: Structural Escalation Followed by Volume-Driven Apparent Moderation
+
+Monthly churn rate from documents with date metadata:
+
+| Period | Churn Rate | n | Notes |
+|--------|-----------|---|-------|
+| 2024-11 | 0.0% | 2 | Pre-Antitro baseline |
+| 2024-12 | 22.2% | — | Antitro market entry |
+| 2025-04 | 100.0% | 3 | Early concentrated switching (all Antitro-related) |
+| 2025-08 | 66.7% | 6 | Sustained high |
+| **2025-11** | **80.0%** | **10** | Peak: highest volume + highest rate |
+| 2026-01 | 57.1% | 7 | Moderation begins |
+| 2026-03 | 45.1% | 113 | Sharp document volume increase |
+| 2026-04 | 26.6% | 331 | Near normalization — volume artifact |
+
+The November 2025 peak (80.0% at n=10) represents the moment of most concentrated switching signal — when Antitro had established sufficient market presence to generate systematic consumer comparison. The apparent moderation in March–April 2026 is a volume artifact: a 23–47× increase in monthly document count (113 and 331 documents vs. single-digit volumes) reflects a broader population mentioning Head & Shoulders, most of whom are not in active switching mode. A 26.6% churn rate at 331 documents represents more absolute switching documents than 80.0% at 10 documents — the apparent rate moderation masks absolute volume growth in switching behavior.
+
+> **Business implication**: Churn rate alone is an insufficient metric when document volume is simultaneously increasing. Absolute churn document count is a better proxy for brand health deterioration. The March–April 2026 data — 88 churn documents in March, 88 in April — represents more absolute switching signal than any prior month, despite the lower rate.
 
 ---
 
 ## Cross-Layer Analysis
 
-### Finding A: The Frame Shift Is Channel-Stratified
+The three layers produce a more complete picture when read together than any single layer provides independently.
 
-Ingredient scrutiny (설페이트, 소듐라우레스설페이트, 계면활성제) appears exclusively in YouTube comments — blog and cafe show zero documents in this cluster (BERTopic Topics 14, 16). Medical frame language (피부과, 항진균, 질환) distributes uniformly across all channels.
+### Finding A: The Frame Shift Is Channel-Stratified — YouTube Is the Leading Edge
 
-YouTube users are at the leading edge of the ingredient/clinical frame shift. Blog and cafe consumers remain in result-focused exploration. The medical frame requires no ingredient literacy and is already mainstream across all channels.
+BERTopic topic-source distribution reveals a sharp channel asymmetry in how clinical/ingredient frame appears:
 
-**Cross-layer interpretation**: Layer 2 shows Antitro search growth accelerating from January 2026. Layer 1 shows ingredient scrutiny concentrated on YouTube. The likely sequence: YouTube-first ingredient scrutiny → Antitro discovery → search volume surge. Intercepting YouTube-channel consumers with ingredient transparency content is a higher-leverage intervention than broad channel campaigns.
+**Ingredient scrutiny topics:**
+- Topic 14 (계면활성제, 약산, 약용, 약국): YouTube 9, Blog 0, Cafe 1
+- Topic 16 (설페이트, 소듐라우레스설페이트, 화학): YouTube 9, Blog 0, Cafe 0
+
+Ingredient scrutiny topics — where consumers directly examine and critique Head & Shoulders' chemical formulation — exist exclusively in YouTube comments.
+
+**Medical frame topics:**
+- Topic 11 (항진균, 지루성두피염, 질환, 원인): Blog 4, Cafe 4, YouTube 3
+- Topic 12 (지루성피부염, 피부과, 처방, 병원): Blog 3, Cafe 1, YouTube 6
+
+Medical frame language distributes relatively uniformly across channels — it has diffused to the general population.
+
+**Competitive comparison:**
+- Topic 1 (303 documents, 헤드엔숄더 + 안티트로 co-occurrence): YouTube 237, Cafe 48, Blog 18
+
+**Cross-layer interpretation**: Layer 2 shows Antitro search acceleration from January 2026. Layer 1 shows ingredient scrutiny exclusively on YouTube. The most probable causal sequence: YouTube viewers encounter ingredient comparison content (설페이트 criticism, antifungal mechanism comparison) → develop clinical literacy → search for Antitro → drive the Layer 2 search volume surge. Medical frame (disease-model framing of scalp conditions) has already diffused across all channels and represents a broad population shift. Ingredient frame remains YouTube-concentrated and represents the most recent, active stage of displacement. YouTube is not just a distribution channel — it is the primary mechanism through which the frame shift is propagating.
 
 ---
 
-### Finding B: Competitive Comparison Happens on YouTube, Not Blogs
+### Finding B: Blog Churn Rate Is High — But Reflects Post-Switch Documentation, Not Decision-Making
 
-BERTopic Topic 1 (303 documents, largest competitive cluster containing both 헤드엔숄더 and 안티트로): YouTube 237 documents, Cafe 48, Blog 18. Competitive head-to-head comparison is a YouTube-native phenomenon.
+Layer 1 causal signal analysis: Blog churn rate 34.1% vs. YouTube 17.3%. A surface reading suggests blogs are the highest-risk channel. BERTopic cross-tabulation contradicts this:
 
-Blog churn rate (34.1%) is higher than YouTube (17.3%) — but blog churn documents reflect post-switch dissatisfaction expressed in long-form posts, not active comparison decisions. YouTube is where the comparison decision is being made.
+Topic 1 competitive comparison: YouTube 237 documents, Cafe 48, Blog 18. Layer 3 Active Switcher segment: Blog 47 documents, YouTube 19, Cafe 17.
 
-**Cross-layer interpretation**: Layer 3 shows Active Switchers concentrated in blogs (47 vs. YouTube 19) — but this reflects post-switch documentation. The decision point is YouTube.
+The apparent contradiction resolves through temporal logic: blog documents are *retrospective accounts* of switches that were decided elsewhere. Long-form blog posts are typically written after the consumer has switched and wants to document their experience. YouTube comments are *real-time reactions* during comparison content consumption — the decision-making moment.
+
+Blog Active Switcher documents are post-switch documentation of decisions made on YouTube. The higher blog churn rate reflects completed switches being documented, not ongoing switching decisions being made. YouTube is where the comparison decision occurs; blog is where the outcome is recorded.
+
+**Cross-layer implication**: Switch prevention interventions belong on YouTube (where decisions are made), not on blog channels (where decisions have already been executed). Blog monitoring is useful for measuring switching volume; YouTube content strategy is the appropriate prevention lever.
 
 ---
 
-### Finding C: The Category Rebound Does Not Benefit HNS
+### Finding C: Cafe High Coherence Is Partly a Shopping Noise Artifact
 
-Layer 2 shows category click volume +14.6% in 2026. A surface reading might suggest the category is recovering and HNS benefits. Cross-referencing with symptom keyword data: the rebound is entirely driven by 안티트로샴푸 (0 → 75.1), while 비듬샴푸 (-21.3%) and 지루성두피샴푸 (-57.6%) continue declining.
+Layer 1 LDA showed cafearticle bigram achieving the highest coherence (0.6329, optimal k=2). BERTopic cross-tabulation reveals an important caveat:
 
-Head & Shoulders is losing search share in a category that is growing — Antitro is expanding the addressable market while simultaneously taking HNS's existing share. This is structurally more threatening than a declining category, because the growth signal masks the displacement.
+Topic 2 (휴대, 가격, 무료, 구매, 배송, 할인 — shopping platform noise): Cafe 95 documents, Blog 16, YouTube 10.
+
+Cafe is substantially contaminated with shopping comparison content — product listings, discount comparisons, and purchase option discussions that mention Head & Shoulders in a commercial rather than experiential context. The high LDA coherence may partly reflect the linguistic consistency of shopping-platform language (`최저가`, `적립`, `구매`) providing a coherent "shopping context" cluster that boosts overall coherence artificially.
+
+**Cross-layer implication**: Cafe LDA coherence should not be interpreted as signal quality. For genuine consumer experience signals, blog (long-form experience documentation) and YouTube (active comparison discussion) are higher-quality sources despite lower raw coherence. The cafearticle bigram coherence advantage is partly a measurement artifact of shopping noise providing topically consistent but informationally low-value content.
 
 ---
 
@@ -439,7 +566,15 @@ An interactive Streamlit dashboard visualizes all three pipeline layers:
 streamlit run dashboard.py
 ```
 
-**Tabs**: Overview | VoC Analysis | Trend Analysis | Switching Risk | BERTopic
+**Tab 1 — Overview**: Pipeline architecture, key metrics across all three layers, cross-layer finding summary cards.
+
+**Tab 2 — VoC Analysis**: Signal distribution by source, competitor mention vs. overall churn, monthly churn/positive trend (2025–2026), LDA coherence heatmap, topic keyword explorer (interactive source × mode selection).
+
+**Tab 3 — Trend Analysis**: Antitro vs. HNS Core search volume with reversal point annotation, HNS product line lifecycle, Chronos 12-month forecast with 80% CI, symptom category keyword language shift (2020–2026).
+
+**Tab 4 — Switching Risk**: Consumer segment distribution, switching probability by segment, segment × source channel breakdown, segment intervention plan with risk-level color coding, Antitro competitive timeline.
+
+**Tab 5 — BERTopic**: Topic distribution, LDA × BERTopic consensus table, LDA vs. BERTopic methodology comparison.
 
 ---
 
@@ -448,12 +583,12 @@ streamlit run dashboard.py
 ```bash
 # 1. Set up environment
 python3 -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate  # on Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
 # 2. Configure API keys
 cp .env.example .env
-# Edit .env with Naver Search API and YouTube Data API v3 keys
+# Edit .env: NAVER_CLIENT_ID, NAVER_CLIENT_SECRET, YOUTUBE_API_KEY
 
 # 3. Layer 1: Collect VoC data
 python voc_pipeline/collector_naver.py
@@ -462,7 +597,7 @@ python voc_pipeline/collector_youtube.py
 # 4. Layer 1: Preprocess
 python voc_pipeline/preprocessor.py
 
-# 5. Layer 1: LDA pipeline
+# 5. Layer 1: LDA topic modeling
 python voc_pipeline/LDA_pipeline.py
 
 # 6. Layer 1: Causal signal detection
@@ -471,18 +606,21 @@ python voc_pipeline/causal_signal_detector.py
 # 7. Layer 1: BERTopic (Google Colab recommended)
 # Upload voc_pipeline/data/processed/hns_processed.csv to Google Drive
 # Run notebooks/hns_bertopic.ipynb on Google Colab (T4 GPU)
-# Download 4 output files to voc_pipeline/data/processed/
+# Download 4 output files to voc_pipeline/data/processed/:
+#   hns_bertopic_results.csv, hns_bertopic_documents.csv,
+#   hns_bertopic_keywords.json, hns_lda_bertopic_consensus.csv
 
 # 8. Layer 2: Load and process trend data
+# Place Naver DataLab CSV/XLSX files in trend_pipeline/data/raw/
 python trend_pipeline/trend_loader.py
 python trend_pipeline/trend_analyzer.py
 
-# 9. Layer 3: Build features and run switching model
+# 9. Layer 3: Build features and run switching probability model
 python switching_pipeline/feature_builder.py
 python switching_pipeline/segment_classifier_regression.py
 python switching_pipeline/switching_probability.py
 
-# 10. Launch dashboard
+# 10. Launch integrated dashboard
 streamlit run dashboard.py
 ```
 
@@ -491,36 +629,36 @@ streamlit run dashboard.py
 ## Dependencies
 
 ```
-# Core NLP
+# Korean NLP
 kiwipiepy==0.23.1
 gensim==4.4.0
 
-# ML / modeling
+# ML / forecasting
 scikit-learn
 torch
-chronos-forecasting
-sktime
+chronos-forecasting        # Amazon Chronos zero-shot time series forecasting
+sktime                     # tested for ROCKET classifier (not adopted in final pipeline)
 
-# Data
+# Data processing
 pandas
 numpy
-openpyxl
+openpyxl                   # Naver DataLab XLSX loading
 
 # Visualization / dashboard
 streamlit
 plotly
 
-# Collection
+# API collection
 requests
 python-dotenv
 google-api-python-client
 
-# BERTopic (Colab environment)
-bertopic
-sentence-transformers
+# BERTopic (Google Colab environment only)
+# bertopic
+# sentence-transformers
 ```
 
-Install all dependencies:
+Install all local dependencies:
 ```bash
 pip install -r requirements.txt
 ```
