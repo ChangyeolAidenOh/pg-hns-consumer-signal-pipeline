@@ -41,12 +41,12 @@ The analysis was designed to answer:
 
 ## Business Context
 
-The Korean shampoo market is undergoing a structural repositioning that cannot be explained by ordinary competitive dynamics. Between 2020 and 2026, several trends converged simultaneously:
+The Korean shampoo market is showing signs of significant structural change. Between 2020 and 2026, several trends converged simultaneously:
 
-- **닥터그루트** (Doctor Groot), once the dominant functional shampoo brand with the highest search volume in the category, collapsed -87.8% from its 2020 peak — confirming that the functional shampoo segment as a whole is under structural pressure, not just individual brands.
+- **닥터그루트** (Doctor Groot), once the dominant functional shampoo brand with the highest search volume in the category, collapsed -87.8% from its 2020 peak. Combined with 케라시스 (-39.3%) and 팬틴 (-35.7%) over the same period, this is consistent with broader structural pressure across the functional shampoo segment — though a single-brand collapse alone is insufficient to confirm a segment-wide trend.
 - **헤드앤숄더클리니컬스트렝스** (Head & Shoulders Clinical Strength), the HNS line most directly positioned in the medicated/clinical segment, effectively disappeared from Naver Shopping search by 2026 (annual average: 35.9 in 2021 → 0.0 in 2026).
 - **안티트로** (Antitro), a derma-channel shampoo brand by Curev with hospital and pharmacy distribution, entered the Naver Shopping search index in December 2024 with near-zero volume and reversed Head & Shoulders Core search volume within exactly 6 months (June 2025). By April 2026 its search volume stands at 1.327× Head & Shoulders Core.
-- The overall shampoo category click volume, which had declined -20.6% in 2024 and -22.2% in 2025, rebounded +14.6% in 2026 — not because traditional brands recovered, but because Antitro's ascent expanded the addressable market under a new consumer search behavior.
+- The overall shampoo category click volume, which had declined -20.6% in 2024 and -22.2% in 2025, rebounded +14.6% in 2026 — not because traditional brands recovered, but primarily because Antitro's ascent generated new search volume under a new keyword. Whether this reflects genuine market expansion or search behavior redistribution cannot be determined from search volume data alone.
 
 These trends together indicate a **category frame shift**: consumers who historically searched "비듬샴푸" (dandruff shampoo) as their primary solution-seeking behavior are transitioning toward brand-specific clinical terminology — specifically "안티트로샴푸" — as their new default reference. This pipeline was built to measure that shift in consumer language, validate it against search trend data, and translate it into segment-level switching probabilities with actionable intervention recommendations.
 
@@ -331,7 +331,7 @@ The At-risk definition captures a specific behavioral state: consumers who have 
 | Loyal | `positive_score` (+4.466), `churn_score` (-5.009) | Cleanest opposing signal profile |
 | Passive User | `is_medical_frame` (-0.528), `is_ingredient_frame` (-0.603) | Absence of frame engagement |
 
-The At-risk coefficient pattern validates the segment hypothesis: `is_ingredient_frame` (+0.938) and `is_medical_frame` (+0.737) are the two strongest At-risk predictors, operating independently of competitor mention. This confirms that frame adoption precedes brand comparison as a behavioral sequence.
+The At-risk coefficient pattern supports the segment hypothesis: `is_ingredient_frame` (+0.938) and `is_medical_frame` (+0.737) are the two strongest At-risk predictors, operating independently of competitor mention. This confirms that frame adoption precedes brand comparison as a behavioral sequence.
 
 #### Switching Probability
 
@@ -405,9 +405,9 @@ Pre-defining stopwords from domain knowledge alone would have missed two critica
 
 Antitro entered the Naver Shopping search index in December 2024 with a volume of 1. By March 2025 it reached 18.1 (still below HNS Core at 54.3). By June 2025 it crossed the reversal threshold. By January 2026, a single-month increase of +40.2 units represented the largest single-month jump in the entire 76-month dataset across any keyword. By April 2026, the Antitro/HNS ratio stands at 1.327.
 
-The velocity of this displacement is the primary finding — not the fact of it. Six months from market entry to category reversal is not gradual competitive pressure. It is a step-function change driven by consumers who were already predisposed to a clinical/derma solution and adopted Antitro as the reference point as soon as it became visible. The Chronos forecast projects HNS Core at 47–54 (median) for May 2026 – April 2027 — flat, with no organic recovery expected.
+The velocity of this displacement is the primary finding — not the fact of it. Six months from market entry to category reversal is not gradual competitive pressure. It is a rapid, non-linear displacement driven by consumers who adopted Antitro rapidly once it became visible — suggesting latent demand for a derma-channel scalp solution that was not being met by existing options. The Chronos forecast projects HNS Core at 47–54 (median) for May 2026 – April 2027 — flat, with no organic recovery expected.
 
-> **Business implication**: The critical intervention window is before the Antitro/HNS ratio exceeds 1.5 — the threshold at which Antitro becomes the default consumer reference point rather than an alternative. At current trajectory (ratio 1.327, January 2026 acceleration +40.2), this threshold could be reached within 2–4 months. Beyond 1.5, repositioning Head & Shoulders against Antitro becomes structurally harder because the category framing shifts from "Head & Shoulders or something else" to "Antitro or something else."
+> **Business implication**: The critical intervention window is before the Antitro/HNS ratio continues to widen. At current trajectory (ratio 1.327, January 2026 acceleration +40.2), the competitive gap is widening at an accelerating pace. 
 
 ---
 
@@ -421,9 +421,9 @@ Shampoo category click volume increased +14.6% in 2026 after declining -20.6% in
 | 지루성두피샴푸 (Seborrheic Shampoo) | 13.7 | 5.8 | -57.6% |
 | 안티트로샴푸 (Antitro Shampoo) | 0.0 | 75.1 | new entrant |
 
-The 2026 category rebound is entirely driven by `안티트로샴푸`. The keywords that historically directed consumers toward Head & Shoulders — `비듬샴푸` (-21.3%) and `지루성두피샴푸` (-57.6%) — continue to decline. Antitro is simultaneously taking Head & Shoulders' existing share and expanding the total addressable market by attracting new search behavior under a new keyword. Head & Shoulders is losing share in a growing category — the category growth signal masks the displacement.
+The 2026 category rebound is primarily driven by `안티트로샴푸`. The keywords that historically directed consumers toward Head & Shoulders — `비듬샴푸` (-21.3%) and `지루성두피샴푸` (-57.6%) — continue to decline. Antitro is simultaneously competing for the same consumer search demand as Head & Shoulders and expanding total category search volume by attracting new search behavior under a new keyword. Head & Shoulders is losing share in a growing category — the category growth signal masks the displacement.
 
-> **Business implication**: Category-level click volume is no longer a reliable proxy for Head & Shoulders brand health. The appropriate metric is keyword-level share: `헤드앤숄더샴푸` as a proportion of total scalp-care search volume. By this measure, Head & Shoulders is declining at an accelerating rate even as the category expands. Also noteworthy: consumer search interest in "안티트로샴푸" as a category-level term is an interest signal — not necessarily direct purchase intent. However, as a brand-as-category term, it indicates Antitro has achieved a level of consumer mindshare that traditionally corresponds to category definition power.
+> **Business implication**: Category-level click volume is no longer a reliable proxy for Head & Shoulders brand health. The appropriate metric is keyword-level share: `헤드앤숄더샴푸` as a proportion of total scalp-care search volume. By this measure, Head & Shoulders is declining at an accelerating rate even as the category expands. Also noteworthy: consumer search interest in "안티트로샴푸" as a category-level term is an interest signal — not necessarily direct purchase intent. However, as a brand-as-category term, it indicates Antitro has achieved consumer mindshare at a scale that warrants monitoring as a potential category redefinition signal.
 
 ---
 
@@ -438,9 +438,9 @@ The 2026 category rebound is entirely driven by `안티트로샴푸`. The keywor
 
 Clinical Strength — the line most directly positioned as a clinical-grade scalp solution — collapsed from 35.9 in 2021 to 0.0 in 2026. Critically, this decline *predates Antitro's entry*: Clinical Strength was already at 4.5 in 2025 before Antitro achieved meaningful volume. Clinical Strength did not lose to Antitro — it lost consumer relevance before Antitro arrived to fill the vacuum.
 
-The new Charcoal (0.9) and Professional (3.4) lines show negligible uptake against Antitro's 75.1. These extensions appear to address different consumer needs — texture, sensory experience, routine differentiation — rather than the clinical efficacy need that Clinical Strength was positioned for and that Antitro now owns.
+The new Charcoal (0.9) and Professional (3.4) lines show negligible uptake against Antitro's 75.1. These extensions show minimal search uptake in comparison to Antitro. Whether they address the same consumer need as Clinical Strength did — or a different one — cannot be determined from search volume data alone.
 
-> **Business implication**: The line extension strategy has not generated meaningful demand in the segments being lost to Antitro. The data suggests that consumers who left Clinical Strength did not migrate to Charcoal or Professional — they either migrated to Antitro/Nizoral or left the head & shoulders brand family entirely for the clinical segment. Recovering the clinical segment requires a positioning strategy that directly addresses clinical credibility (mechanism of action, dermatologist validation, antifungal efficacy), not product form novelty.
+> **Business implication**: The line extension strategy has not generated meaningful demand in the segments being lost to Antitro. The search volume data does not show evidence of migration to Charcoal or Professional from consumers who stopped searching for Clinical Strength. Where those consumers went cannot be determined from search volume data alone. Recovering the clinical segment requires a positioning strategy that directly addresses clinical credibility (mechanism of action, dermatologist validation, antifungal efficacy), not product form novelty.
 
 ---
 
@@ -459,9 +459,9 @@ Of 1,744 HNS-relevant documents, 418 (24.0%) carry churn signals. Top churn keyw
 올라오 (flare-up):           30  ← symptom escalation
 ```
 
-Itchiness (291) is 5.2× more frequent than the next signal (자극, 90). This is a product efficacy signal, not a brand perception signal. Consumers are not leaving because Head & Shoulders' brand image has deteriorated — they are leaving because the core product promise (scalp symptom relief) is failing for a meaningful proportion of users. The co-occurrence of `안티트로` (56) and `니조랄` (45) alongside skin reaction signals — rather than alongside pricing or availability complaints — confirms that the churn trajectory is: efficacy failure → clinical alternative search → brand switch.
+Itchiness (291) is 5.2× more frequent than the next signal (자극, 90). This is primarily a product efficacy signal. The dominant churn language is symptom-based (itchiness, irritation, breakouts) rather than brand-perception-based (image, packaging, price). Whether brand image deterioration is also contributing cannot be determined from this dataset alone. The co-occurrence of `안티트로` (56) and `니조랄` (45) alongside skin reaction signals — rather than alongside pricing or availability complaints — is consistent with a churn sequence of: efficacy failure → clinical alternative search → brand switch. However, this sequence is inferred from keyword co-occurrence within documents, not from longitudinal consumer journey data.
 
-> **Business implication**: Marketing interventions that reinforce brand values or increase awareness will not address efficacy-driven churn. Consumers who mention itchiness and irritation in the context of Head & Shoulders have already experienced the product and found it insufficient. The appropriate response is clinical credibility reinforcement — specifically, consumer-accessible communication of zinc pyrithione's antifungal mechanism that directly addresses the efficacy comparison consumers are drawing with Antitro's active ingredient positioning. This is a product communication challenge, not a brand equity challenge.
+> **Business implication**: Marketing interventions that reinforce brand values or increase awareness will not address efficacy-driven churn. Consumers who mention itchiness and irritation in the context of Head & Shoulders are describing product-use experiences in their text, suggesting the core symptom relief promise is not being met for a meaningful proportion of this segment. The appropriate response is clinical credibility reinforcement — addressing the efficacy comparison consumers are drawing with Antitro's positioning. What specific ingredient or mechanism claims are appropriate is a product and regulatory question beyond the scope of this analysis.
 
 ---
 
@@ -477,11 +477,11 @@ The At-risk segment (91 documents, 5.2%) defines consumers who have adopted clin
 | churn_rate | 100.0% | 100.0% | 19.9% |
 | P(switch) | 0.352 | 0.405 | 0.043 |
 
-The At-risk segment's ingredient frame rate (60.4%) is higher than Active Switcher (22.9%) — meaning ingredient scrutiny is an *early-stage* behavior that peaks before competitor discovery, not a concurrent behavior. Consumers develop chemical/clinical literacy (searching for 설페이트, 계면활성제, 약산성) *before* they identify Antitro as their solution. The logistic regression coefficient confirms this: `is_ingredient_frame` (+0.938) is the strongest positive predictor of At-risk membership, operating independently of any competitor mention.
+The At-risk segment's ingredient frame rate (60.4%) is higher than Active Switcher (22.9%) — meaning ingredient scrutiny is an *early-stage* behavior that peaks before competitor discovery, not a concurrent behavior. Consumers develop chemical/clinical literacy (searching for 설페이트, 계면활성제, 약산성) *before* they identify Antitro as their solution. The logistic regression is consistent with this pattern: `is_ingredient_frame` (+0.938) is the strongest positive predictor of At-risk membership, operating independently of any competitor mention.
 
 The churn rates of At-risk (100%) and Active Switcher (100%) are identical. The only distinguishing feature is competitor mention: At-risk consumers have the same dissatisfaction intensity but have not yet found their alternative. This is the intervention window.
 
-> **Business implication**: At-risk consumers represent a conversion opportunity that closes as soon as they discover Antitro's clinical positioning. The behavioral sequence is: ingredient curiosity emerges → consumer searches for 설페이트 / 계면활성제 / 약산성 content → encounters Antitro's derma positioning → transitions to Active Switcher. Proactive content that addresses ingredient questions from Head & Shoulders' perspective — explaining zinc pyrithione's antifungal mechanism, positioning HNS as a clinically validated solution — can intercept At-risk consumers during the ingredient curiosity phase, before they encounter Antitro. The intervention timing is the period between frame adoption and competitive brand discovery: estimated at 2–4 weeks based on typical consumer search-to-purchase cycles.
+> **Business implication**: At-risk consumers represent a conversion opportunity that narrows significantly once they discover Antitro's clinical positioning. The behavioral sequence is: ingredient curiosity emerges → consumer searches for 설페이트 / 계면활성제 / 약산성 content → encounters Antitro's derma positioning → transitions to Active Switcher. Proactive content that addresses the ingredient and medical-frame questions At-risk consumers are already asking (설페이트, 계면활성제, 약산성) from Head & Shoulders' perspective can intercept this segment during the ingredient curiosity phase, before they encounter Antitro's positioning. What specific claims are appropriate is beyond the scope of this analysis. The intervention timing is the period between frame adoption and competitive brand discovery. The exact duration cannot be estimated from this dataset, but the behavioral signal sequence — ingredient frame peaking before competitor mention — is consistent with the existence of this window.
 
 ---
 
@@ -518,7 +518,7 @@ BERTopic topic-source distribution reveals a sharp channel asymmetry in how clin
 - Topic 14 (계면활성제, 약산, 약용, 약국): YouTube 9, Blog 0, Cafe 1
 - Topic 16 (설페이트, 소듐라우레스설페이트, 화학): YouTube 9, Blog 0, Cafe 0
 
-Ingredient scrutiny topics — where consumers directly examine and critique Head & Shoulders' chemical formulation — exist exclusively in YouTube comments.
+Ingredient scrutiny topics — where consumers directly examine and critique Head & Shoulders' chemical formulation — are concentrated almost exclusively in YouTube comments (Topic 14: YouTube 9, Blog 0, Cafe 1; Topic 16: YouTube 9, Blog 0, Cafe 0).
 
 **Medical frame topics:**
 - Topic 11 (항진균, 지루성두피염, 질환, 원인): Blog 4, Cafe 4, YouTube 3
@@ -529,7 +529,7 @@ Medical frame language distributes relatively uniformly across channels — it h
 **Competitive comparison:**
 - Topic 1 (303 documents, 헤드엔숄더 + 안티트로 co-occurrence): YouTube 237, Cafe 48, Blog 18
 
-**Cross-layer interpretation**: Layer 2 shows Antitro search acceleration from January 2026. Layer 1 shows ingredient scrutiny exclusively on YouTube. The most probable causal sequence: YouTube viewers encounter ingredient comparison content (설페이트 criticism, antifungal mechanism comparison) → develop clinical literacy → search for Antitro → drive the Layer 2 search volume surge. Medical frame (disease-model framing of scalp conditions) has already diffused across all channels and represents a broad population shift. Ingredient frame remains YouTube-concentrated and represents the most recent, active stage of displacement. YouTube is not just a distribution channel — it is the primary mechanism through which the frame shift is propagating.
+**Cross-layer interpretation**: Layer 2 shows Antitro search acceleration from January 2026. Layer 1 shows ingredient scrutiny exclusively on YouTube. One plausible interpretation consistent with the data: YouTube viewers encounter ingredient comparison content (설페이트 criticism, antifungal mechanism comparison) → develop clinical literacy → search for Antitro → drive the Layer 2 search volume surge. This sequence cannot be confirmed from the available data and should be treated as a hypothesis. Medical frame (disease-model framing of scalp conditions) has already diffused across all channels and represents a broad population shift. Ingredient frame remains YouTube-concentrated and represents the most recent, active stage of displacement. YouTube is the channel where ingredient scrutiny and competitive comparison are most concentrated in this dataset — though this reflects the nature of YouTube comment data (real-time reactions) vs. blog/cafe data (longer-form posts) as much as it reflects a causal role.
 
 ---
 
@@ -539,9 +539,7 @@ Layer 1 causal signal analysis: Blog churn rate 34.1% vs. YouTube 17.3%. A surfa
 
 Topic 1 competitive comparison: YouTube 237 documents, Cafe 48, Blog 18. Layer 3 Active Switcher segment: Blog 47 documents, YouTube 19, Cafe 17.
 
-The apparent contradiction resolves through temporal logic: blog documents are *retrospective accounts* of switches that were decided elsewhere. Long-form blog posts are typically written after the consumer has switched and wants to document their experience. YouTube comments are *real-time reactions* during comparison content consumption — the decision-making moment.
-
-Blog Active Switcher documents are post-switch documentation of decisions made on YouTube. The higher blog churn rate reflects completed switches being documented, not ongoing switching decisions being made. YouTube is where the comparison decision occurs; blog is where the outcome is recorded.
+One possible interpretation of this pattern: blog's long-form format may be better suited for documenting completed experiences (including post-switch accounts), while YouTube comments may capture more active, in-progress comparison discussions. However, this is an interpretation based on format characteristics, not on temporal metadata from the documents. We cannot confirm from the available data when individual documents were written relative to the switching decision, or whether decisions were made on YouTube specifically.
 
 **Cross-layer implication**: Switch prevention interventions belong on YouTube (where decisions are made), not on blog channels (where decisions have already been executed). Blog monitoring is useful for measuring switching volume; YouTube content strategy is the appropriate prevention lever.
 
@@ -563,7 +561,7 @@ Cafe is substantially contaminated with shopping comparison content — product 
 
 > **"As consumers shift their scalp problem-solving frame from 'shampoo brands' toward 'derma/clinic solutions', can Head & Shoulders defend its position through Charcoal and mild-acid line extensions — or is the category itself being redefined around a new reference point?"**
 
-The three-layer pipeline converges on a clear answer: **the Charcoal and mild-acid line extensions are insufficient to defend Head & Shoulders' position in the clinical/medicated scalp segment, and the category is actively being redefined around Antitro as the new consumer reference point.** However, the displacement is not yet irreversible, and a specific intervention window remains open.
+The three-layer pipeline converges on a clear answer: **the Charcoal and mild-acid line extensions are insufficient to defend Head & Shoulders' position in the clinical/medicated scalp segment, and the category is actively being redefined around Antitro as the new consumer reference point.** However, the pipeline identifies specific consumer segments and signal patterns that suggest an intervention window remains — though whether the displacement is reversible cannot be determined from this data.
 
 ---
 
@@ -579,7 +577,7 @@ The collapse of Clinical Strength (35.9 in 2021 → 0.0 in 2026) further confirm
 
 The most consequential finding across all three layers is not that Antitro is taking share from Head & Shoulders. It is that Antitro is changing what "solving a scalp problem" means to Korean consumers. Layer 1 VoC shows consumers approaching scalp conditions as clinical/disease-model problems (항진균, 지루성두피염, 피부과, 처방) rather than as grooming/cosmetic problems. Layer 2 trend data shows `비듬샴푸` (-21.3%) and `지루성두피샴푸` (-57.6%) declining while `안티트로샴푸` (0 → 75.1) rises — not just as a brand preference shift but as a category language shift.
 
-This distinction matters strategically. If it were only a brand preference shift, Head & Shoulders could respond with better marketing, stronger efficacy claims, or reformulation. A **category frame shift** requires a fundamentally different response: establishing Head & Shoulders as a legitimate clinical/dermatological solution, not just a better shampoo. The current line extension strategy does not accomplish this. Charcoal and mild-acid are shampoo-category innovations; Antitro is a clinic-category solution. The consumer is not choosing between two shampoos — they are choosing between a shampoo and a clinical treatment.
+This distinction matters strategically. If it were only a brand preference shift, Head & Shoulders could respond with better marketing, stronger efficacy claims, or reformulation. A **category frame shift** requires a fundamentally different response: establishing Head & Shoulders as a legitimate clinical/dermatological solution, not just a better shampoo. The current line extension strategy does not accomplish this. Charcoal and mild-acid are shampoo-category innovations; Antitro is a clinic-category solution. The consumer is not choosing between two equivalent shampoo brands — they are choosing between a mass-retail shampoo and a derma-channel shampoo that speaks the language of clinical scalp care.
 
 ---
 
@@ -587,21 +585,21 @@ This distinction matters strategically. If it were only a brand preference shift
 
 The pipeline identifies a specific consumer group that represents both the mechanism of the displacement and the intervention opportunity: the **At-risk segment** (91 documents, 5.2%, P(switch)=0.352).
 
-At-risk consumers are defined by the behavioral sequence that precedes switching: they have adopted ingredient/medical scrutiny framing (is_ingredient_frame: 60.4%, is_medical_frame: 41.8%) and carry full churn intensity (churn_rate: 100%) but have not yet identified Antitro as their alternative (is_competitor: 0.0%). The logistic regression confirms that ingredient frame adoption is the earliest detectable signal of pre-switch behavior — it appears before competitor discovery, peaks in the At-risk segment, and declines in the Active Switcher segment as competitor comparison replaces general frame exploration.
+At-risk consumers are defined by the behavioral sequence that precedes switching: they have adopted ingredient/medical scrutiny framing (is_ingredient_frame: 60.4%, is_medical_frame: 41.8%) and carry full churn intensity (churn_rate: 100%) but have not yet identified Antitro as their alternative (is_competitor: 0.0%). The logistic regression is consistent with the hypothesis that ingredient frame adoption is an early-stage pre-switch signal: `is_ingredient_frame` peaks in the At-risk segment (60.4%) and is lower in the Active Switcher segment (22.9%), suggesting frame scrutiny precedes direct competitor comparison. However, this is a cross-sectional pattern across different consumers, not a longitudinal observation of individual consumer journeys.
 
-The intervention window is the period between ingredient curiosity emergence and competitive brand discovery — estimated at 2–4 weeks. Antitro's ratio crossed 1.327 in April 2026; at January 2026 acceleration velocity (+40.2 single month), the 1.5 threshold — the point at which Antitro becomes the default consumer reference — could be reached within 2–4 months.
+The intervention window is the period between ingredient curiosity emergence and competitive brand discovery — the exact duration cannot be estimated from this dataset. Antitro's ratio crossed 1.327 in April 2026; at January 2026 acceleration velocity (+40.2 single month), the competitive gap is widening at an accelerating pace.
 
 ---
 
-### 4. The Required Strategic Response
+### 4. Strategic Implications From the Data
 
 The pipeline data points to three specific actions, ordered by urgency:
 
-**Immediate (before Antitro/HNS ratio reaches 1.5)**: Deploy clinical credibility content on YouTube — the channel where ingredient scrutiny originates and where competitive comparison decisions are made (Topic 1: YouTube 237 documents vs. Blog 18). The content needs to directly address zinc pyrithione's antifungal mechanism in consumer-accessible language, positioning Head & Shoulders as a clinically validated antifungal solution — not just as a dandruff shampoo. This intercepts At-risk consumers during the ingredient curiosity phase before they discover Antitro's clinical positioning.
+**Immediate**: Deploy clinical credibility content on YouTube — the channel where ingredient scrutiny originates and where competitive comparison decisions are made (Topic 1: YouTube 237 documents vs. Blog 18). The content should address the ingredient and medical-frame questions that At-risk consumers are already asking — the data shows 설페이트, 계면활성제, 약산성 as the specific terms they are searching. What specific ingredient claims or clinical evidence Head & Shoulders should lead with is a product and regulatory question beyond what VoC and search volume data can specify.
 
-**Medium-term (3–6 months)**: Address the efficacy failure signal that is the root cause of churn. The 291 itchiness mentions, 90 irritation mentions, and 63 breakout mentions in the VoC data are not communication failures — they are product experience failures. Formulation review for the consumer segments experiencing skin reactions (particularly the skin_reaction churn category) is indicated. Clinical Strength's collapse suggests that the brand already lost the clinical efficacy battle once; recovering it requires product-level intervention, not only repositioning.
+**Medium-term (3–6 months)**: Address the efficacy failure signal that is the root cause of churn. The 291 itchiness mentions, 90 irritation mentions, and 63 breakout mentions in the VoC data indicate that efficacy-related experience is the dominant churn signal. Whether these reflect product formulation issues, usage method issues, or individual skin-type incompatibility cannot be determined from VoC text data alone. Formulation review for the consumer segments experiencing skin reactions (particularly the skin_reaction churn category) is indicated. Clinical Strength's collapse suggests that the clinical/medicated segment positioning has been losing consumer relevance for several years; the current situation may require more than repositioning.
 
-**Structural (6–12 months)**: Establish a hospital/pharmacy distribution channel strategy. Antitro's competitive advantage is not only formulation — it is channel credibility. The BERTopic Topic 12 cluster (피부과, 처방, 병원, 뾰루지) reflects consumers seeking dermatologist-endorsed solutions, not just clinically formulated ones. Head & Shoulders' historical strength (mass retail distribution) is structurally misaligned with the channel through which the clinical scalp solution category is being defined. A pharmacy/clinic channel strategy — even at limited scale — would address the channel credibility gap that cannot be solved through mass retail marketing alone.
+**Structural (6–12 months)**: Consider channel credibility strategy. Antitro's positioning advantage is not only formulation — it is channel association (hospital/pharmacy). BERTopic Topic 12 (피부과, 처방, 병원) reflects consumers who are seeking dermatologist-associated solutions. The data is consistent with a channel credibility gap, though whether a pharmacy/clinic distribution strategy is feasible or sufficient to close it cannot be determined from VoC and search volume data alone.
 
 ---
 
@@ -611,7 +609,7 @@ Two important caveats:
 
 First, the Antitro search volume data reflects **consumer interest** (Naver Shopping search queries), not purchase volume or market share. High search volume for Antitro confirms consumer awareness and active exploration but does not directly measure revenue displacement. The business impact may be larger or smaller than the search volume gap suggests, depending on conversion rates and repeat purchase behavior that are not captured in this dataset.
 
-Second, the At-risk segment intervention timing (2–4 weeks between frame adoption and competitor discovery) is inferred from behavioral signal sequence analysis, not measured from individual consumer journey data. The actual timing varies by consumer and may be influenced by content algorithm factors (YouTube recommendation of Antitro comparison videos) that are outside Head & Shoulders' control.
+Second, the At-risk segment intervention timing (the period between frame adoption and competitor discovery) cannot be measured from this dataset. Individual consumer journey data would be required to estimate this window. The actual timing may also be influenced by content algorithm factors (YouTube recommendation of Antitro comparison videos) that are outside Head & Shoulders' control.
 
 These limitations do not invalidate the strategic direction — the displacement is real and measurable across all three data layers — but they establish the boundaries of what can be claimed with confidence from this analysis.
 
