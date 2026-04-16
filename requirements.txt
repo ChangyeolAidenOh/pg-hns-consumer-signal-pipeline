@@ -1,5 +1,5 @@
 kiwipiepy==0.23.1
-gensim==4.3.3
+gensim
 streamlit
 plotly
 pandas
