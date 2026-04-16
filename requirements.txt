@@ -7,7 +7,6 @@ numpy>=1.18,<2.0
 scikit-learn
 torch
 chronos-forecasting
-sktime
 openpyxl
 requests
 python-dotenv
