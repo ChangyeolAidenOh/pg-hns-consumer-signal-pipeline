@@ -1,0 +1,22 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Data files (reproducible, not redistributed)
+voc_pipeline/data/raw/
+voc_pipeline/data/processed/
+trend_pipeline/data/raw/
+trend_pipeline/data/processed/
+switching_pipeline/data/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# PyCharm
+.idea/
+
+# macOS
+.DS_Store
