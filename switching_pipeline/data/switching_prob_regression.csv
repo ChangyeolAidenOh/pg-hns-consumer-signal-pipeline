@@ -1,0 +1,5 @@
+﻿segment,n_docs,churn_rate,competitor_rate,medical_rate,ingredient_rate,base_prob,switching_probability
+Active Switcher,83,1.0,1.0,0.2289,0.2289,0.284,0.4052
+At-risk,91,1.0,0.0,0.4176,0.6044,0.2465,0.3517
+Passive User,1224,0.1993,0.0131,0.0923,0.116,0.0303,0.0432
+Loyal,346,0.0,0.0058,0.1214,0.2081,0.0,0.0

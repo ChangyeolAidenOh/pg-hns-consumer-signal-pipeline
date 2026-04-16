@@ -1,0 +1,5 @@
+﻿segment,n_docs,switching_probability,risk_level,primary_channel,intervention_timing,recommended_action
+Active Switcher,83,0.4052,Critical,Blog,Immediate,Direct competitive messaging on blogs. Address antitro comparison with clinical efficacy data. Reinforce HNS Clinical Strength positioning vs derma brands.
+At-risk,91,0.3517,High,All channels (uniform distribution),Pre-switch (3-4 weeks),"Ingredient transparency content: explain zinc pyrithione vs antifungal mechanism. Medical frame alignment: position HNS as dermatologist-recommended, not just a shampoo brand."
+Passive User,1224,0.0432,Moderate,YouTube + Cafe,Ongoing,Scalp health education content on YouTube. Prevent frame shift toward medical/ingredient scrutiny by proactively addressing ingredient questions.
+Loyal,346,0.0,Low,Cafe,Maintenance,Loyalty reinforcement via community engagement. Leverage satisfied users as brand advocates in comparison discussions.

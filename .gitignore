@@ -7,11 +7,7 @@ __pycache__/
 
 # Data files (reproducible, not redistributed)
 voc_pipeline/data/raw/
-voc_pipeline/data/processed/
 trend_pipeline/data/raw/
-trend_pipeline/data/processed/
-switching_pipeline/data/
-
 # Jupyter
 .ipynb_checkpoints/
 
