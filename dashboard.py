@@ -66,7 +66,7 @@ def format_keywords(val):
 
 
 st.title("Head & Shoulders Consumer Signal Detection Pipeline")
-st.markdown("Aiden Changyeol Oh | 3-Layer NLP × Trend × ML Pipeline")
+st.markdown("3-Layer NLP × Trend × ML Pipeline")
 st.divider()
 
 st.markdown("""
