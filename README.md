@@ -29,7 +29,7 @@ A 3-layer Korean NLP × Trend × ML pipeline that detects and quantifies consume
 
 ## Project Overview
 
-This pipeline was built as a portfolio project targeting the **P&G Korea S&M (Sales & Marketing)** internship role. Rather than producing a surface-level brand sentiment analysis, the project attempts to identify *causal* signals in consumer language and search behavior that explain *why* and *how fast* consumers are switching away from Head & Shoulders — and which specific consumer segments are at the highest structural risk.
+This pipeline was built as a portfolio project. Rather than producing a surface-level brand sentiment analysis, the project attempts to identify *causal* signals in consumer language and search behavior that explain *why* and *how fast* consumers are switching away from Head & Shoulders — and which specific consumer segments are at the highest structural risk.
 
 The analysis was designed to answer:
 - What language signals in Korean VoC indicate active switching, latent risk, or continued satisfaction — and do these signals differ by channel (blog, cafe, YouTube)?
